@@ -17,7 +17,7 @@ int Shell_exec(Shell template, ...)
 
   va_start(argp, template);
 
-  for(key = va_arg(argp, const char *)
+  for(key = va_arg(argp, const char *);
       key != NULL;
       key = va_arg(argp, const char *));
   {
@@ -48,7 +48,7 @@ int Shell_run(apr_pool_t *p, Shell *cmd)
   apr_status_t rv;
   apr_proc_t newproc;
 
-  rv = apr_porcattr_create(&attr, p);
+  rv = apr_procattr_create(&attr, p);
   check(rv == APR_SUCCESS, "Failed to create proc attr.");
 
   rv = apr_procattr_io_set(attr, APR_NO_PIPE, APR_NO_PIPE, 
@@ -102,7 +102,7 @@ Shell CURL_SH = {
   .args = {"curl", "-L", "-o", "TARGET", "URL", NULL}
 };
 
-Shell CONFGURE_SH = {
+Shell CONFIGURE_SH = {
   .exe = "./configure",
   .dir = "/tmp/pkg-build",
   .args = {"configure", "OPTS", NULL}
